@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Botox Party — Registro de Invitada | CASS Beauty</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #070707;
+      --panel: rgba(18, 18, 18, 0.9);
+      --panel-strong: #111111;
+      --line: rgba(201, 168, 76, 0.24);
+      --line-strong: rgba(201, 168, 76, 0.52);
+      --gold: #c9a84c;
+      --gold-soft: #ebd9a2;
+      --text: #f7f1dd;
+      --muted: rgba(247, 241, 221, 0.72);
+      --field: rgba(255, 255, 255, 0.04);
+      --success-bg: rgba(201, 168, 76, 0.12);
+      --success-line: rgba(201, 168, 76, 0.44);
+      --shadow: 0 24px 60px rgba(0, 0, 0, 0.38);
+      --radius: 24px;
+      --radius-sm: 16px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      background:
+        radial-gradient(circle at top, rgba(201, 168, 76, 0.18), transparent 32%),
+        linear-gradient(180deg, #111111 0%, #070707 52%, #050505 100%);
+      color: var(--text);
+    }
+
+    body {
+      font-family: "Inter", Arial, sans-serif;
+      line-height: 1.5;
+      padding: 24px;
+    }
+
+    .shell {
+      max-width: 920px;
+      margin: 0 auto;
+    }
+
+    .card {
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(160deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01)),
+        var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .card::before,
+    .card::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      pointer-events: none;
+    }
+
+    .card::before {
+      width: 280px;
+      height: 280px;
+      right: -140px;
+      top: -120px;
+      background: radial-gradient(circle, rgba(201, 168, 76, 0.16), transparent 70%);
+    }
+
+    .card::after {
+      width: 240px;
+      height: 240px;
+      left: -140px;
+      bottom: -140px;
+      background: radial-gradient(circle, rgba(201, 168, 76, 0.08), transparent 72%);
+    }
+
+    .hero {
+      padding: 56px 28px 24px;
+      text-align: center;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand-mark {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      color: var(--gold-soft);
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      font-size: 12px;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid var(--line-strong);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      font-family: "Cormorant Garamond", serif;
+      font-size: 22px;
+      background: rgba(201, 168, 76, 0.06);
+    }
+
+    h1 {
+      margin: 0;
+      font-family: "Cormorant Garamond", serif;
+      font-weight: 600;
+      font-size: clamp(2.5rem, 6vw, 4.2rem);
+      line-height: 0.95;
+      letter-spacing: 0.01em;
+    }
+
+    .hero p {
+      max-width: 620px;
+      margin: 18px auto 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .content {
+      padding: 28px;
+      display: grid;
+      gap: 24px;
+    }
+
+    .panel {
+      background: var(--panel-strong);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 24px;
+    }
+
+    .panel-title {
+      margin: 0 0 18px;
+      font-family: "Cormorant Garamond", serif;
+      font-size: 30px;
+      font-weight: 600;
+      color: var(--gold-soft);
+    }
+
+    .panel-subtitle {
+      margin: -8px 0 20px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    form {
+      display: grid;
+      gap: 18px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    .field.full,
+    .consent,
+    .action {
+      grid-column: 1 / -1;
+    }
+
+    label,
+    .group-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--gold-soft);
+      font-weight: 600;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      background: var(--field);
+      color: var(--text);
+      padding: 15px 16px;
+      font: inherit;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: rgba(247, 241, 221, 0.36);
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--line-strong);
+      box-shadow: 0 0 0 4px rgba(201, 168, 76, 0.12);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .choice-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 10px;
+    }
+
+    .choice-grid.two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .choice {
+      position: relative;
+    }
+
+    .choice input {
+      position: absolute;
+      opacity: 0;
+      inset: 0;
+      cursor: pointer;
+    }
+
+    .choice span {
+      min-height: 54px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 12px;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.02);
+      transition: all 0.2s ease;
+    }
+
+    .choice input:checked + span {
+      color: #0d0d0d;
+      background: linear-gradient(135deg, var(--gold-soft), var(--gold));
+      border-color: transparent;
+      box-shadow: 0 12px 24px rgba(201, 168, 76, 0.22);
+      font-weight: 700;
+    }
+
+    .consent-box {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(201, 168, 76, 0.06);
+      border: 1px solid var(--line);
+    }
+
+    .consent-box input[type="checkbox"] {
+      width: 22px;
+      height: 22px;
+      margin-top: 2px;
+      accent-color: var(--gold);
+      padding: 0;
+      flex: 0 0 auto;
+    }
+
+    .consent-copy strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 14px;
+      color: var(--gold-soft);
+    }
+
+    .consent-copy p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      border: none;
+      border-radius: 18px;
+      padding: 18px 20px;
+      background: linear-gradient(135deg, #f0e1b2 0%, #c9a84c 34%, #9f7a1d 100%);
+      color: #0b0b0b;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 18px 36px rgba(201, 168, 76, 0.2);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+    }
+
+    .submit-btn:hover {
+      filter: brightness(1.04);
+      box-shadow: 0 22px 42px rgba(201, 168, 76, 0.28);
+    }
+
+    .submit-btn:active {
+      transform: translateY(1px);
+    }
+
+    .submit-btn:disabled {
+      cursor: wait;
+      opacity: 0.75;
+    }
+
+    .message {
+      display: none;
+      padding: 18px 20px;
+      border-radius: 18px;
+      border: 1px solid var(--success-line);
+      background: var(--success-bg);
+      color: var(--gold-soft);
+      font-weight: 600;
+    }
+
+    .message.show {
+      display: block;
+    }
+
+    .aside {
+      display: grid;
+      gap: 18px;
+    }
+
+    .aside-note p,
+    .aside-note li {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .aside-note ul {
+      margin: 12px 0 0;
+      padding-left: 18px;
+    }
+
+    .powered {
+      padding: 22px 28px 30px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing: 0.08em;
+    }
+
+    .powered-logo {
+      display: block;
+      margin-top: 10px;
+      font-family: "Cormorant Garamond", serif;
+      font-size: 28px;
+      color: var(--gold-soft);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    @media (min-width: 860px) {
+      .content {
+        grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.8fr);
+        align-items: start;
+      }
+    }
+
+    @media (max-width: 720px) {
+      body {
+        padding: 14px;
+      }
+
+      .hero {
+        padding: 42px 22px 22px;
+      }
+
+      .content,
+      .powered {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .panel {
+        padding: 18px;
+      }
+
+      .grid,
+      .choice-grid.two {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="card">
+      <header class="hero">
+        <div class="brand-mark">
+          <span class="brand-icon">C</span>
+          <span>Evento especial</span>
+        </div>
+        <h1>Botox Party — Registro de Invitada</h1>
+        <p>Completa tu inscripción para reservar tu lugar en la experiencia exclusiva de CASS Beauty.</p>
+      </header>
+
+      <div class="content">
+        <section class="panel">
+          <h2 class="panel-title">Reserva tu lugar</h2>
+          <p class="panel-subtitle">Este formulario es de registro para evento. No sustituye un consentimiento informado médico.</p>
+
+          <div id="successMessage" class="message" aria-live="polite">
+            ¡Tu lugar está reservado! Te contactaremos pronto.
+          </div>
+
+          <form id="registroForm" novalidate>
+            <div class="grid">
+              <div class="field">
+                <label for="nombreCompleto">Nombre completo</label>
+                <input id="nombreCompleto" name="nombreCompleto" type="text" placeholder="Nombre y apellidos" required />
+              </div>
+
+              <div class="field">
+                <label for="telefonoCelular">Teléfono celular</label>
+                <input id="telefonoCelular" name="telefonoCelular" type="tel" inputmode="tel" placeholder="+52 55 1234 5678" required />
+              </div>
+
+              <div class="field">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" placeholder="tu@email.com" required />
+              </div>
+
+              <div class="field">
+                <label for="fechaNacimiento">Fecha de nacimiento</label>
+                <input id="fechaNacimiento" name="fechaNacimiento" type="date" required />
+              </div>
+
+              <div class="field full">
+                <span class="group-label">¿Primera vez con botox?</span>
+                <div class="choice-grid two">
+                  <label class="choice">
+                    <input type="radio" name="primeraVezBotox" value="Sí" required />
+                    <span>Sí</span>
+                  </label>
+                  <label class="choice">
+                    <input type="radio" name="primeraVezBotox" value="No" />
+                    <span>No</span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="field full">
+                <span class="group-label">Zona de interés</span>
+                <div class="choice-grid">
+                  <label class="choice">
+                    <input type="radio" name="zonaInteres" value="Frente" required />
+                    <span>Frente</span>
+                  </label>
+                  <label class="choice">
+                    <input type="radio" name="zonaInteres" value="Entrecejo" />
+                    <span>Entrecejo</span>
+                  </label>
+                  <label class="choice">
+                    <input type="radio" name="zonaInteres" value="Patas de gallo" />
+                    <span>Patas de gallo</span>
+                  </label>
+                  <label class="choice">
+                    <input type="radio" name="zonaInteres" value="Labios" />
+                    <span>Labios</span>
+                  </label>
+                  <label class="choice">
+                    <input type="radio" name="zonaInteres" value="Todo" />
+                    <span>Todo</span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="field full">
+                <label for="condicionMedica">¿Tienes alguna condición médica?</label>
+                <textarea id="condicionMedica" name="condicionMedica" placeholder="Cuéntanos cualquier antecedente o condición que debamos conocer."></textarea>
+              </div>
+
+              <div class="field">
+                <label for="emergenciaNombre">Contacto de emergencia</label>
+                <input id="emergenciaNombre" name="emergenciaNombre" type="text" placeholder="Nombre completo" required />
+              </div>
+
+              <div class="field">
+                <label for="emergenciaTelefono">Teléfono de emergencia</label>
+                <input id="emergenciaTelefono" name="emergenciaTelefono" type="tel" inputmode="tel" placeholder="+52 55 9876 5432" required />
+              </div>
+
+              <div class="consent">
+                <label class="consent-box" for="aceptoTerminos">
+                  <input id="aceptoTerminos" name="aceptoTerminos" type="checkbox" required />
+                  <span class="consent-copy">
+                    <strong>Declaro haber leído y acepto los términos</strong>
+                    <p>Confirmo que la información proporcionada es correcta y autorizo a CASS Beauty a contactarme para la coordinación del evento.</p>
+                  </span>
+                </label>
+              </div>
+
+              <div class="action">
+                <button type="submit" class="submit-btn" id="submitButton">Confirmar mi lugar</button>
+              </div>
+            </div>
+          </form>
+        </section>
+
+        <aside class="aside">
+          <section class="panel aside-note">
+            <h2 class="panel-title">Antes del evento</h2>
+            <p>Tu registro queda guardado en este dispositivo como respaldo. Nuestro equipo te contactará para validar disponibilidad, detalles y siguientes pasos.</p>
+            <ul>
+              <li>Revisa que tu teléfono y email estén correctos.</li>
+              <li>Si es tu primera vez, indícalo para orientarte mejor.</li>
+              <li>La valoración final siempre se realiza de forma personalizada.</li>
+            </ul>
+          </section>
+
+          <section class="panel aside-note">
+            <h2 class="panel-title">Privado y simple</h2>
+            <p>Este formulario funciona sin backend. Al confirmar, se muestra tu mensaje de reserva y los datos se guardan en <code>localStorage</code> como respaldo local.</p>
+          </section>
+        </aside>
+      </div>
+
+      <footer class="powered">
+        Powered by CASS Beauty
+        <span class="powered-logo">CASS Beauty</span>
+      </footer>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      var STORAGE_KEY = "cassBeautyBotoxPartyRegistroBackup";
+      var form = document.getElementById("registroForm");
+      var successMessage = document.getElementById("successMessage");
+      var submitButton = document.getElementById("submitButton");
+
+      function getFieldValue(formData, key) {
+        return (formData.get(key) || "").toString().trim();
+      }
+
+      function loadDraft() {
+        try {
+          var saved = localStorage.getItem(STORAGE_KEY);
+          if (!saved) return;
+          var data = JSON.parse(saved);
+          Object.keys(data).forEach(function (key) {
+            var field = form.elements.namedItem(key);
+            if (!field) return;
+
+            if (field instanceof RadioNodeList) {
+              Array.prototype.forEach.call(field, function (option) {
+                option.checked = option.value === data[key];
+              });
+              return;
+            }
+
+            if (field.type === "checkbox") {
+              field.checked = Boolean(data[key]);
+              return;
+            }
+
+            field.value = data[key];
+          });
+        } catch (error) {
+          console.warn("No se pudo recuperar el borrador guardado.", error);
+        }
+      }
+
+      function persistDraft(payload) {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+        } catch (error) {
+          console.warn("No se pudo guardar el respaldo local.", error);
+        }
+      }
+
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
+
+        submitButton.disabled = true;
+
+        var formData = new FormData(form);
+        var payload = {
+          nombreCompleto: getFieldValue(formData, "nombreCompleto"),
+          telefonoCelular: getFieldValue(formData, "telefonoCelular"),
+          email: getFieldValue(formData, "email"),
+          fechaNacimiento: getFieldValue(formData, "fechaNacimiento"),
+          primeraVezBotox: getFieldValue(formData, "primeraVezBotox"),
+          zonaInteres: getFieldValue(formData, "zonaInteres"),
+          condicionMedica: getFieldValue(formData, "condicionMedica"),
+          emergenciaNombre: getFieldValue(formData, "emergenciaNombre"),
+          emergenciaTelefono: getFieldValue(formData, "emergenciaTelefono"),
+          aceptoTerminos: document.getElementById("aceptoTerminos").checked,
+          registradoEn: new Date().toISOString()
+        };
+
+        persistDraft(payload);
+        successMessage.classList.add("show");
+        form.reset();
+        submitButton.disabled = false;
+        successMessage.scrollIntoView({ behavior: "smooth", block: "center" });
+      });
+
+      loadDraft();
+    })();
+  </script>
+</body>
+</html>
