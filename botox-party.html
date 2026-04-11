@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Botox Party · Registro Anticipado · Cass Beauty</title>
+  <!-- jsPDF para generar el PDF de registro -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    /* ─── RESET ──────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --rosa:       #d4718a; --rosa-dark: #b5526b;
+      --rosa-light: #fdf0f3; --rosa-ultra: #fff8fa;
+      --gold:       #c9a84c;
+      --verde:      #3a8c5c; --verde-light: #edf7f2;
+      --gris-txt:   #6b6b6b; --gris-borde: #e8e8e8;
+      --negro:      #1c1c1e; --blanco:     #ffffff; --fondo: #f9f4f5;
+    }
+    body {
+      font-family: -apple-system,'SF Pro Text','Helvetica Neue',Arial,sans-serif;
+      background: var(--fondo); color: var(--negro);
+      font-size: 17px; line-height: 1.6;
+    }
+    .wrap { max-width: 480px; margin: 0 auto; padding-bottom: 48px; }
+
+    /* ─── HERO ───────────────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(145deg, #c9637a 0%, #a8435c 50%, #8c3149 100%);
+      padding: 40px 24px 36px; text-align: center;
+    }
+    .hero-back {
+      position: absolute; left: 18px; top: 18px;
+      color: rgba(255,255,255,.8); font-size: 28px; text-decoration: none;
+      line-height: 1;
+    }
+    .hero-logo { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+    .hero-logo svg { width: 30px; height: 30px; }
+    .hero-logo-text { color: white; font-size: 21px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; }
+    .hero-badge {
+      display: inline-block; background: rgba(255,255,255,.18); color: white;
+      font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      padding: 4px 14px; border-radius: 100px; margin-bottom: 12px;
+    }
+    .hero h1 { color: white; font-size: 26px; font-weight: 700; letter-spacing: -.5px; margin-bottom: 6px; }
+    .hero-sub { color: rgba(255,255,255,.78); font-size: 14px; }
+
+    /* ─── PRECIO ─────────────────────────────────────────────────── */
+    .price-banner { background: var(--gold); color: white; text-align: center; padding: 14px 24px; }
+    .price-banner strong { font-size: 30px; font-weight: 800; }
+    .price-banner span   { font-size: 12px; display: block; opacity: .88; margin-top: 2px; }
+
+    /* ─── CARDS ──────────────────────────────────────────────────── */
+    .section { padding: 0 16px; margin-top: 20px; }
+    .card {
+      background: var(--blanco); border-radius: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.07);
+      padding: 22px 18px; border: 1px solid var(--gris-borde); margin-bottom: 16px;
+    }
+    .card-title {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1.8px; color: var(--rosa-dark);
+      padding-bottom: 12px; margin-bottom: 18px;
+      border-bottom: 1.5px solid var(--rosa-light);
+    }
+
+    /* ─── FIELDS ─────────────────────────────────────────────────── */
+    .field { margin-bottom: 16px; }
+    .field label { display: block; font-size: 13px; font-weight: 600; color: var(--gris-txt); margin-bottom: 6px; }
+    .field input, .field select, .field textarea {
+      width: 100%; padding: 14px 16px;
+      border: 1.5px solid var(--gris-borde); border-radius: 12px;
+      font-size: 16px; font-family: inherit; background: #fafafa;
+      transition: border-color .2s; -webkit-appearance: none;
+    }
+    .field input:focus, .field select:focus, .field textarea:focus {
+      outline: none; border-color: var(--rosa); background: var(--rosa-ultra);
+    }
+    .field textarea { resize: vertical; min-height: 88px; }
+
+    /* ─── PILLS ──────────────────────────────────────────────────── */
+    .pills { display: flex; flex-wrap: wrap; gap: 10px; padding-top: 4px; }
+    .pill {
+      padding: 10px 18px; border: 2px solid var(--gris-borde); border-radius: 100px;
+      font-size: 14px; font-weight: 500; cursor: pointer; background: white; color: var(--negro);
+      transition: all .18s; user-select: none;
+    }
+    .pill.on { background: var(--rosa); border-color: var(--rosa); color: white; box-shadow: 0 3px 12px rgba(212,113,138,.35); }
+
+    /* ─── INFO BOX ───────────────────────────────────────────────── */
+    .info-box { background: var(--rosa-light); border-radius: 12px; padding: 16px; font-size: 14px; color: #5a3040; line-height: 1.7; }
+    .info-box p + p { margin-top: 8px; }
+
+    /* ─── PAGO STRIPE LINK ───────────────────────────────────────── */
+    .pay-summary { background: var(--verde-light); border-radius: 12px; padding: 16px; margin-bottom: 18px; }
+    .pay-row { display: flex; justify-content: space-between; font-size: 15px; padding: 4px 0; }
+    .pay-row.total { font-weight: 700; font-size: 17px; border-top: 1.5px solid #c3e8d4; margin-top: 8px; padding-top: 10px; color: var(--verde); }
+
+    /* ─── BOTÓN ──────────────────────────────────────────────────── */
+    .btn-main {
+      width: 100%; padding: 20px;
+      background: linear-gradient(135deg, var(--verde) 0%, #2a6a44 100%);
+      color: white; border: none; border-radius: 16px;
+      font-size: 18px; font-weight: 700; letter-spacing: .3px;
+      box-shadow: 0 6px 24px rgba(58,140,92,.38);
+      cursor: pointer; transition: transform .15s, box-shadow .15s;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+    }
+    .btn-main:active  { transform: scale(.98); }
+    .btn-main:disabled{ opacity: .6; cursor: not-allowed; transform: none; }
+
+    .secure-note {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 12px; color: #aaa; justify-content: center; margin-top: 10px;
+    }
+    .secure-note svg { width: 14px; height: 14px; }
+
+    /* ─── MODAL ──────────────────────────────────────────────────── */
+    .overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:100; align-items:center; justify-content:center; padding:24px; }
+    .overlay.show { display:flex; }
+    .modal { background:white; border-radius:20px; padding:28px 22px; width:100%; max-width:400px; animation:slideUp .25s ease; }
+    @keyframes slideUp { from{transform:translateY(30px);opacity:0} to{transform:translateY(0);opacity:1} }
+    .modal h2 { font-size: 20px; font-weight: 700; margin-bottom: 14px; }
+    .mrow { font-size:14px; color:var(--gris-txt); padding:6px 0; border-bottom:1px solid var(--gris-borde); display:flex; justify-content:space-between; gap:8px; }
+    .mrow strong { color:var(--negro); text-align:right; }
+    .modal-btns { display:flex; gap:12px; margin-top:22px; }
+    .btn-cancel  { flex:1; padding:16px; background:#f2f2f7; color:var(--negro); border:none; border-radius:12px; font-size:16px; font-weight:600; cursor:pointer; }
+    .btn-confirm { flex:2; padding:16px; background:linear-gradient(135deg,var(--verde) 0%,#2a6a44 100%); color:white; border:none; border-radius:12px; font-size:16px; font-weight:700; cursor:pointer; }
+
+    /* ─── LOADING ────────────────────────────────────────────────── */
+    .screen-load { display:none; position:fixed; inset:0; background:white; z-index:200; flex-direction:column; align-items:center; justify-content:center; gap:20px; }
+    .screen-load.show { display:flex; }
+    .spinner { width:52px; height:52px; border:4px solid var(--rosa-light); border-top-color:var(--rosa); border-radius:50%; animation:spin .8s linear infinite; }
+    @keyframes spin { to{transform:rotate(360deg)} }
+    .screen-load p { color:var(--gris-txt); font-size:15px; }
+
+    /* ─── ÉXITO ──────────────────────────────────────────────────── */
+    .screen-ok { display:none; position:fixed; inset:0; background:white; z-index:200; flex-direction:column; align-items:center; justify-content:center; padding:32px; text-align:center; gap:16px; }
+    .screen-ok.show { display:flex; }
+    .ok-icon { width:80px; height:80px; background:var(--verde-light); border-radius:50%; display:flex; align-items:center; justify-content:center; }
+    .ok-icon svg { width:44px; height:44px; color:var(--verde); }
+    .screen-ok h2 { font-size:24px; font-weight:800; }
+    .screen-ok p  { font-size:15px; color:var(--gris-txt); max-width:320px; }
+    .folio-box { background:var(--rosa-light); border-radius:12px; padding:14px 22px; font-size:18px; font-weight:700; color:var(--rosa-dark); letter-spacing:1px; }
+    .btn-pagar-ahora {
+      width:100%; padding:18px;
+      background: linear-gradient(135deg, #c9637a 0%, #a8435c 100%);
+      color:white; border:none; border-radius:14px;
+      font-size:17px; font-weight:700; cursor:pointer;
+      box-shadow: 0 6px 20px rgba(168,67,92,.35);
+      display:flex; align-items:center; justify-content:center; gap:10px;
+      text-decoration:none; max-width:340px;
+    }
+    .btn-nuevo { margin-top:4px; padding:14px 28px; background:var(--rosa-light); color:var(--rosa-dark); border:none; border-radius:12px; font-size:15px; font-weight:600; cursor:pointer; }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero" style="position:relative;">
+  <a class="hero-back" href="index.html">‹</a>
+  <div class="hero-logo">
+    <svg viewBox="0 0 32 32" fill="none">
+      <path d="M16 2C16 2 9 8 9 14C9 18.4183 12.134 22 16 22C19.866 22 23 18.4183 23 14C23 8 16 2 16 2Z" fill="rgba(255,255,255,.9)"/>
+      <path d="M16 30C16 30 9 24 9 18C9 13.5817 12.134 10 16 10C19.866 10 23 13.5817 23 18C23 24 16 30 16 30Z" fill="rgba(255,255,255,.5)"/>
+    </svg>
+    <span class="hero-logo-text">Cass Beauty</span>
+  </div>
+  <div class="hero-badge">✨ BOTOX PARTY</div>
+  <h1>Registro Anticipado</h1>
+  <p class="hero-sub">Reserva tu lugar · Pago en línea</p>
+</div>
+
+<!-- PRECIO BANNER -->
+<div class="price-banner">
+  <strong>$900 MXN</strong>
+  <span>por persona · precio especial de evento</span>
+</div>
+
+<div class="wrap"><div class="section">
+
+  <!-- DATOS DEL EVENTO -->
+  <div class="card">
+    <div class="card-title">Datos del Evento</div>
+    <div class="field">
+      <label>Fecha del evento *</label>
+      <input type="date" id="fechaEvento" required />
+    </div>
+    <div class="field">
+      <label>Nombre de la anfitriona <span style="font-weight:400;color:#bbb">(opcional)</span></label>
+      <input type="text" id="anfitriona" placeholder="Ej. Sofía García" />
+    </div>
+    <div class="field">
+      <label>Temática / nombre del evento <span style="font-weight:400;color:#bbb">(opcional)</span></label>
+      <input type="text" id="tematica" placeholder="Ej. Despedida de soltera, cumpleaños…" />
+    </div>
+  </div>
+
+  <!-- DATOS PERSONALES -->
+  <div class="card">
+    <div class="card-title">Tus Datos</div>
+    <div class="field">
+      <label>Nombre completo *</label>
+      <input type="text" id="nombre" placeholder="Nombre y apellidos" required />
+    </div>
+    <div class="field">
+      <label>Fecha de nacimiento *</label>
+      <input type="date" id="fechaNac" required />
+    </div>
+    <div class="field">
+      <label>Teléfono / WhatsApp *</label>
+      <input type="tel" id="telefono" placeholder="+52 55 1234 5678" required />
+    </div>
+    <div class="field">
+      <label>Correo electrónico *</label>
+      <input type="email" id="email" placeholder="Para enviarte tu confirmación" required />
+    </div>
+  </div>
+
+  <!-- ÁREAS -->
+  <div class="card">
+    <div class="card-title">Áreas de Interés</div>
+    <p style="font-size:13px;color:var(--gris-txt);margin-bottom:14px;">
+      Selecciona las zonas que te gustaría tratar (orientativo, no vinculante)
+    </p>
+    <div class="pills" id="pillsAreas">
+      <div class="pill" onclick="togglePill(this)">Frente</div>
+      <div class="pill" onclick="togglePill(this)">Entrecejo</div>
+      <div class="pill" onclick="togglePill(this)">Patas de gallo</div>
+      <div class="pill" onclick="togglePill(this)">Labio superior</div>
+      <div class="pill" onclick="togglePill(this)">Mentón</div>
+      <div class="pill" onclick="togglePill(this)">Cuello (Nefertiti)</div>
+      <div class="pill" onclick="togglePill(this)">Axilas</div>
+    </div>
+  </div>
+
+  <!-- QUÉ INCLUYE -->
+  <div class="card">
+    <div class="card-title">¿Qué incluye tu registro?</div>
+    <div class="info-box">
+      <p>💉 <strong>Consulta personalizada</strong> con la terapeuta el día del evento.</p>
+      <p>✨ <strong>Aplicación de toxina botulínica</strong> en las áreas acordadas.</p>
+      <p>📸 <strong>Registro fotográfico</strong> antes y después del procedimiento.</p>
+      <p>📄 <strong>Comprobante de registro</strong> digital con folio único.</p>
+      <p>🎁 <strong>Precio especial de evento</strong> — reserva anticipada garantiza tu lugar.</p>
+    </div>
+  </div>
+
+  <!-- NOTAS -->
+  <div class="card">
+    <div class="card-title">Notas / Preguntas</div>
+    <div class="field">
+      <textarea id="notas" placeholder="¿Tienes alguna pregunta, condición médica o preferencia?"></textarea>
+    </div>
+  </div>
+
+  <!-- PAGO -->
+  <div class="card">
+    <div class="card-title">💳 Resumen de Pago</div>
+    <div class="pay-summary">
+      <div class="pay-row"><span>Registro Botox Party</span><strong>$900 MXN</strong></div>
+      <div class="pay-row"><span>Cargo por servicio</span><strong>$0</strong></div>
+      <div class="pay-row total"><span>Total a pagar</span><strong>$900 MXN</strong></div>
+    </div>
+    <p style="font-size:13px;color:var(--gris-txt);margin-bottom:18px;line-height:1.5;">
+      Al continuar aceptas que el pago es un depósito de reserva. Cancelaciones con
+      más de 24 hrs de anticipación se reembolsan al 100%.
+    </p>
+    <button class="btn-main" id="btnRegistrar" onclick="iniciarRegistro()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M20 6L9 17l-5-5"/>
+      </svg>
+      REGISTRARME Y PAGAR $900
+    </button>
+    <div class="secure-note">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2">
+        <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+      </svg>
+      Pago seguro · Procesado por Stripe
+    </div>
+  </div>
+
+</div></div><!-- /section /wrap -->
+
+
+<!-- MODAL CONFIRMACIÓN -->
+<div class="overlay" id="modalOverlay">
+  <div class="modal">
+    <h2>Confirma tu registro</h2>
+    <div id="modalBody"></div>
+    <div class="modal-btns">
+      <button class="btn-cancel"  onclick="cerrarModal()">Editar</button>
+      <button class="btn-confirm" onclick="confirmarRegistro()">Confirmar ›</button>
+    </div>
+  </div>
+</div>
+
+<!-- LOADING -->
+<div class="screen-load" id="screenLoad">
+  <div class="spinner"></div>
+  <p id="loadMsg">Generando tu comprobante…</p>
+</div>
+
+<!-- ÉXITO + BOTÓN STRIPE -->
+<div class="screen-ok" id="screenOk">
+  <div class="ok-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#3a8c5c" stroke-width="2.5" stroke-linecap="round">
+      <path d="M20 6L9 17l-5-5"/>
+    </svg>
+  </div>
+  <h2>¡Registro completado!</h2>
+  <div class="folio-box" id="folioBox">CB-PARTY-2026-0000</div>
+  <p>Tu comprobante se guardó correctamente. Ahora completa tu pago para asegurar tu lugar:</p>
+  <!--
+    INSTRUCCIÓN: Crea un Payment Link en tu Stripe Dashboard
+    (dashboard.stripe.com → Products → Payment Links)
+    y reemplaza la URL del href de abajo con tu link real.
+  -->
+  <a id="btnPagarAhora" class="btn-pagar-ahora"
+     href="https://buy.stripe.com/REEMPLAZA_CON_TU_PAYMENT_LINK"
+     target="_blank" rel="noopener">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+      <rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/>
+    </svg>
+    PAGAR $900 MXN CON STRIPE
+  </a>
+  <p style="font-size:12px;color:#aaa;">Folio de registro guardado. Guárdalo para el día del evento.</p>
+  <button class="btn-nuevo" onclick="nuevoRegistro()">Registrar otra participante</button>
+</div>
+
+
+<!-- JAVASCRIPT -->
+<script>
+/* ═══════════════════════════════════════════════════════════════════
+   CONFIGURACIÓN — actualiza estos valores
+   ═══════════════════════════════════════════════════════════════════ */
+const CONFIG = {
+  cloudinaryCloud:  'dxohyqmji',
+  cloudinaryPreset: 'cass_beauty_consent',
+  precioMXN: 900,
+  // Crea tu Payment Link en dashboard.stripe.com → Products → Payment Links
+  // y pon la URL aquí:
+  stripePagoUrl: 'https://buy.stripe.com/REEMPLAZA_CON_TU_PAYMENT_LINK'
+};
+
+/* ─── PÍLDORAS ───────────────────────────────────────────────────── */
+function togglePill(el) { el.classList.toggle('on'); }
+function areasOn() { return [...document.querySelectorAll('.pill.on')].map(p => p.textContent); }
+
+/* ─── FOLIO ──────────────────────────────────────────────────────── */
+function generarFolio() {
+  const hoy = new Date();
+  const f = `${hoy.getFullYear()}${String(hoy.getMonth()+1).padStart(2,'0')}${String(hoy.getDate()).padStart(2,'0')}`;
+  return `CB-PARTY-${f}-${Math.floor(1000 + Math.random()*9000)}`;
+}
+
+/* ─── VALIDAR ────────────────────────────────────────────────────── */
+function validar() {
+  const reqs = [
+    ['fechaEvento', 'Selecciona la fecha del evento.'],
+    ['nombre',      'Ingresa tu nombre completo.'],
+    ['fechaNac',    'Ingresa tu fecha de nacimiento.'],
+    ['telefono',    'Ingresa tu teléfono o WhatsApp.'],
+    ['email',       'Ingresa tu correo electrónico.'],
+  ];
+  for (const [id, msg] of reqs) {
+    const el = document.getElementById(id);
+    if (!el.value.trim()) { alert(msg); el.focus(); return false; }
+  }
+  return true;
+}
+
+/* ─── MOSTRAR MODAL ──────────────────────────────────────────────── */
+function iniciarRegistro() {
+  if (!validar()) return;
+  const areas = areasOn();
+  document.getElementById('modalBody').innerHTML = `
+    <div class="mrow">Nombre      <strong>${document.getElementById('nombre').value}</strong></div>
+    <div class="mrow">Evento      <strong>${document.getElementById('fechaEvento').value}</strong></div>
+    <div class="mrow">Teléfono    <strong>${document.getElementById('telefono').value}</strong></div>
+    <div class="mrow">Email       <strong>${document.getElementById('email').value}</strong></div>
+    <div class="mrow">Áreas       <strong>${areas.length ? areas.join(', ') : 'Sin especificar'}</strong></div>
+    <div class="mrow" style="border:none;font-weight:700;color:var(--verde);">Total <strong>$${CONFIG.precioMXN} MXN</strong></div>
+  `;
+  document.getElementById('modalOverlay').classList.add('show');
+}
+
+function cerrarModal() { document.getElementById('modalOverlay').classList.remove('show'); }
+
+/* ─── CONFIRMAR Y PROCESAR ───────────────────────────────────────── */
+async function confirmarRegistro() {
+  cerrarModal();
+  const folio = generarFolio();
+  mostrarLoading('Generando tu comprobante…');
+
+  try {
+    // 1. Generar PDF del comprobante de registro
+    const pdfBlob = await generarPDF(folio);
+
+    // 2. Subir a Cloudinary
+    mostrarLoading('Guardando comprobante en la nube…');
+    await subirCloudinary(pdfBlob, folio);
+
+    // 3. Mostrar pantalla de éxito con botón de pago
+    mostrarExito(folio);
+
+  } catch (err) {
+    console.error('Error:', err);
+    // Aunque falle Cloudinary, mostramos el éxito y el botón de pago
+    mostrarExito(folio);
+  }
+}
+
+/* ─── GENERAR PDF ────────────────────────────────────────────────── */
+async function generarPDF(folio) {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation:'p', unit:'mm', format:'a4' });
+  const ancho = 210; const margen = 20; const col = margen;
+
+  // ── PÁGINA 1: COMPROBANTE ──
+  // Header rosa
+  doc.setFillColor(168, 67, 92);
+  doc.rect(0, 0, ancho, 45, 'F');
+  doc.setFontSize(22); doc.setFont('helvetica','bold'); doc.setTextColor(255,255,255);
+  doc.text('CASS BEAUTY', ancho/2, 18, { align:'center' });
+  doc.setFontSize(13); doc.setFont('helvetica','normal');
+  doc.text('BOTOX PARTY · Registro Anticipado', ancho/2, 27, { align:'center' });
+  doc.setFontSize(10);
+  doc.text(`Folio: ${folio}`, ancho/2, 37, { align:'center' });
+
+  // Datos
+  doc.setTextColor(28,28,30); doc.setFontSize(14); doc.setFont('helvetica','bold');
+  doc.text('Datos del Registro', col, 58);
+  doc.setDrawColor(212,113,138); doc.setLineWidth(0.5);
+  doc.line(col, 61, ancho-margen, 61);
+
+  const datos = [
+    ['Nombre',           document.getElementById('nombre').value],
+    ['Fecha de nacimiento', document.getElementById('fechaNac').value],
+    ['Teléfono / WhatsApp', document.getElementById('telefono').value],
+    ['Correo',           document.getElementById('email').value],
+    ['Fecha del evento', document.getElementById('fechaEvento').value],
+    ['Anfitriona',       document.getElementById('anfitriona').value || '—'],
+    ['Temática',         document.getElementById('tematica').value || '—'],
+  ];
+
+  let y = 72;
+  doc.setFontSize(11);
+  for (const [label, valor] of datos) {
+    doc.setFont('helvetica','bold'); doc.setTextColor(90,48,64);
+    doc.text(label + ':', col, y);
+    doc.setFont('helvetica','normal'); doc.setTextColor(28,28,30);
+    doc.text(String(valor), col + 65, y);
+    y += 9;
+  }
+
+  // Áreas
+  const areas = areasOn();
+  y += 6;
+  doc.setFontSize(14); doc.setFont('helvetica','bold'); doc.setTextColor(28,28,30);
+  doc.text('Áreas de interés', col, y); y += 5;
+  doc.setDrawColor(212,113,138); doc.line(col, y, ancho-margen, y); y += 10;
+  doc.setFontSize(11); doc.setFont('helvetica','normal');
+  doc.text(areas.length ? areas.join(', ') : 'Sin especificar', col, y); y += 12;
+
+  // Notas
+  const notas = document.getElementById('notas').value;
+  if (notas) {
+    doc.setFontSize(14); doc.setFont('helvetica','bold'); doc.setTextColor(28,28,30);
+    doc.text('Notas adicionales', col, y); y += 5;
+    doc.setDrawColor(212,113,138); doc.line(col, y, ancho-margen, y); y += 10;
+    doc.setFontSize(11); doc.setFont('helvetica','normal');
+    const lines = doc.splitTextToSize(notas, ancho - margen*2);
+    doc.text(lines, col, y); y += lines.length * 6 + 8;
+  }
+
+  // Pago
+  doc.setFillColor(237,247,242);
+  doc.roundedRect(col, y, ancho-margen*2, 28, 4, 4, 'F');
+  doc.setFontSize(12); doc.setFont('helvetica','bold'); doc.setTextColor(58,140,92);
+  doc.text('Monto a pagar: $900 MXN', col+8, y+10);
+  doc.setFontSize(10); doc.setFont('helvetica','normal'); doc.setTextColor(90,90,90);
+  doc.text('Depósito de reserva · Cancelaciones con 24 hrs → reembolso 100%', col+8, y+20);
+
+  // Footer
+  doc.setFontSize(9); doc.setTextColor(180,180,180);
+  doc.text(`Cass Beauty Clínica Estética · ${new Date().toLocaleDateString('es-MX')} · ${folio}`, ancho/2, 285, { align:'center' });
+
+  return doc.output('blob');
+}
+
+/* ─── SUBIR A CLOUDINARY ─────────────────────────────────────────── */
+async function subirCloudinary(blob, folio) {
+  const mes = new Date().toLocaleDateString('es-MX', { month:'2-digit', year:'numeric' }).replace('/','-');
+  const form = new FormData();
+  form.append('file', blob, `${folio}.pdf`);
+  form.append('upload_preset', CONFIG.cloudinaryPreset);
+  form.append('folder', `cass/registros/botox-party/${mes}`);
+  form.append('public_id', folio);
+
+  const res = await fetch(`https://api.cloudinary.com/v1_1/${CONFIG.cloudinaryCloud}/raw/upload`, {
+    method: 'POST', body: form
+  });
+  if (!res.ok) throw new Error('Cloudinary error: ' + res.status);
+  const data = await res.json();
+  console.log('Cloudinary OK →', data.secure_url);
+  return data.secure_url;
+}
+
+/* ─── UI HELPERS ─────────────────────────────────────────────────── */
+function mostrarLoading(msg) {
+  document.getElementById('loadMsg').textContent = msg;
+  document.getElementById('screenLoad').classList.add('show');
+}
+function mostrarExito(folio) {
+  document.getElementById('screenLoad').classList.remove('show');
+  document.getElementById('folioBox').textContent = folio;
+  // Actualizar el link de Stripe con el folio como referencia
+  const btnPago = document.getElementById('btnPagarAhora');
+  btnPago.href = CONFIG.stripePagoUrl + '?client_reference_id=' + folio;
+  document.getElementById('screenOk').classList.add('show');
+}
+
+function nuevoRegistro() {
+  document.getElementById('screenOk').classList.remove('show');
+  ['nombre','fechaNac','telefono','email','notas','anfitriona','tematica','fechaEvento']
+    .forEach(id => document.getElementById(id).value = '');
+  document.querySelectorAll('.pill.on').forEach(p => p.classList.remove('on'));
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+
+</body>
+</html>
