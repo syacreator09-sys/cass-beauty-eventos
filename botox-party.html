@@ -3,7 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-  <title>Botox Party · Registro Anticipado · Cass Beauty</title>
+  <title>Botox Party · 9 de Mayo · Cuernavaca · Cass Beauty</title>
+  <meta name="description" content="Botox Party Cass Beauty · 9 de mayo en Cuernavaca · Solo 15 lugares · Botox antifaz + Ojeras + 10 hilos PDO + Ritual + Alberca · Paquete $5,900 MXN · Aparta con $500.">
+  <meta property="og:title" content="Botox Party · 9 de Mayo · Cuernavaca · Cass Beauty">
+  <meta property="og:description" content="Solo 15 lugares · Botox antifaz + Ojeras + 10 hilos PDO + Ritual. Paquete completo $5,900 · Aparta con $500 hoy.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://res.cloudinary.com/dxohyqmji/image/upload/cass/botox-party-og.jpg">
+  <meta name="twitter:card" content="summary_large_image">
   <!-- jsPDF para generar el PDF de registro -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
@@ -44,6 +50,14 @@
     }
     .hero h1 { color: white; font-size: 26px; font-weight: 700; letter-spacing: -.5px; margin-bottom: 6px; }
     .hero-sub { color: rgba(255,255,255,.78); font-size: 14px; }
+    .hero-date { color: rgba(255,255,255,.85); font-size: 13px; margin-top: 10px; letter-spacing: .3px; }
+    .hero-countdown { display: inline-block; background: rgba(255,255,255,.18); color: white;
+      font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+      padding: 5px 16px; border-radius: 100px; margin-top: 8px; }
+    .btn-wa { display: inline-flex; align-items: center; gap: 8px; margin-top: 10px;
+      padding: 14px 28px; background: #25D366; color: white; border-radius: 12px;
+      font-size: 15px; font-weight: 600; text-decoration: none;
+      box-shadow: 0 4px 14px rgba(37,211,102,.3); }
 
     /* ─── PRECIO ─────────────────────────────────────────────────── */
     .price-banner { background: var(--gold); color: white; text-align: center; padding: 14px 24px; }
@@ -167,14 +181,21 @@
     <span class="hero-logo-text">Cass Beauty</span>
   </div>
   <div class="hero-badge">✨ BOTOX PARTY</div>
-  <h1>Registro Anticipado</h1>
-  <p class="hero-sub">Reserva tu lugar · Pago en línea</p>
+  <h1>Aparta tu Lugar</h1>
+  <p class="hero-sub">Solo 15 mujeres · Casa privada</p>
+  <div class="hero-date">📍 Cuernavaca, Mor. &nbsp;·&nbsp; 9 de mayo 2026</div>
+  <div class="hero-countdown" id="heroCountdown"></div>
 </div>
 
 <!-- PRECIO BANNER -->
 <div class="price-banner">
-  <strong>$900 MXN</strong>
-  <span>por persona · precio especial de evento</span>
+  <div style="font-size:13px;opacity:.78;text-decoration:line-through;margin-bottom:2px;">$8,500 MXN valor real</div>
+  <strong>$5,900 MXN</strong>
+  <span>paquete completo · sábado 9 de mayo</span>
+  <div style="margin-top:10px;font-size:13px;background:rgba(255,255,255,.22);
+    border-radius:100px;padding:5px 18px;display:inline-block;font-weight:600;">
+    Aparta tu lugar hoy con solo $500
+  </div>
 </div>
 
 <div class="wrap"><div class="section">
@@ -236,13 +257,16 @@
 
   <!-- QUÉ INCLUYE -->
   <div class="card">
-    <div class="card-title">¿Qué incluye tu registro?</div>
+    <div class="card-title">¿Qué incluye el paquete?</div>
     <div class="info-box">
-      <p>💉 <strong>Consulta personalizada</strong> con la terapeuta el día del evento.</p>
-      <p>✨ <strong>Aplicación de toxina botulínica</strong> en las áreas acordadas.</p>
-      <p>📸 <strong>Registro fotográfico</strong> antes y después del procedimiento.</p>
-      <p>📄 <strong>Comprobante de registro</strong> digital con folio único.</p>
-      <p>🎁 <strong>Precio especial de evento</strong> — reserva anticipada garantiza tu lugar.</p>
+      <p>🧘 <strong>Ritual de bienvenida</strong> — meditación guiada en jardín privado.</p>
+      <p>💉 <strong>Botox zona antifaz</strong> — frente, entrecejo y patas de gallo.</p>
+      <p>👁️ <strong>Tratamiento de ojeras</strong> — reduce bolsas y oscuridad.</p>
+      <p>🧵 <strong>10 hilos PDO lifting</strong> — natural, sin cirugía, dura 6 meses.</p>
+      <p>🌊 <strong>Snacks + alberca + goodie bag</strong> — experiencia completa en casa privada.</p>
+      <p style="margin-top:10px;font-size:12px;color:#7a4055;">
+        Solo 15 cupos disponibles · Resultados varían, consulta valoración previa.
+      </p>
     </div>
   </div>
 
@@ -258,19 +282,23 @@
   <div class="card">
     <div class="card-title">💳 Resumen de Pago</div>
     <div class="pay-summary">
-      <div class="pay-row"><span>Registro Botox Party</span><strong>$900 MXN</strong></div>
-      <div class="pay-row"><span>Cargo por servicio</span><strong>$0</strong></div>
-      <div class="pay-row total"><span>Total a pagar</span><strong>$900 MXN</strong></div>
+      <div class="pay-row"><span>Paquete completo Botox Party</span><strong>$5,900 MXN</strong></div>
+      <div class="pay-row"><span>Valor real (anchor)</span><strong style="text-decoration:line-through;color:#aaa">$8,500</strong></div>
+      <div class="pay-row" style="border-top:1.5px solid #c3e8d4;margin-top:8px;padding-top:10px;">
+        <span>Apartado online hoy</span><strong style="color:var(--verde)">$500 MXN</strong>
+      </div>
+      <div class="pay-row total"><span>Restante el 9 de mayo</span><strong>$5,400 MXN</strong></div>
     </div>
     <p style="font-size:13px;color:var(--gris-txt);margin-bottom:18px;line-height:1.5;">
-      Al continuar aceptas que el pago es un depósito de reserva. Cancelaciones con
-      más de 24 hrs de anticipación se reembolsan al 100%.
+      El apartado de <strong>$500 MXN</strong> reserva tu lugar (solo 15 disponibles).
+      El restante de <strong>$5,400 MXN</strong> se liquida el día del evento.
+      Cancelaciones con más de 48 hrs de anticipación se reembolsan al 100%.
     </p>
     <button class="btn-main" id="btnRegistrar" onclick="iniciarRegistro()">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
         <path d="M20 6L9 17l-5-5"/>
       </svg>
-      REGISTRARME Y PAGAR $900
+      APARTAR MI LUGAR · $500 MXN
     </button>
     <div class="secure-note">
       <svg viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2">
@@ -308,23 +336,23 @@
       <path d="M20 6L9 17l-5-5"/>
     </svg>
   </div>
-  <h2>¡Registro completado!</h2>
+  <h2>¡Lugar apartado!</h2>
   <div class="folio-box" id="folioBox">CB-PARTY-2026-0000</div>
-  <p>Tu comprobante se guardó correctamente. Ahora completa tu pago para asegurar tu lugar:</p>
-  <!--
-    INSTRUCCIÓN: Crea un Payment Link en tu Stripe Dashboard
-    (dashboard.stripe.com → Products → Payment Links)
-    y reemplaza la URL del href de abajo con tu link real.
-  -->
+  <p>Tu folio está guardado. Para confirmar tu lugar aparta con <strong>$500 MXN</strong> ahora.<br>
+    El restante de <strong>$5,400 MXN</strong> lo liquidas el <strong>9 de mayo en Cuernavaca</strong>.</p>
   <a id="btnPagarAhora" class="btn-pagar-ahora"
-     href="https://buy.stripe.com/REEMPLAZA_CON_TU_PAYMENT_LINK"
+     href="#"
      target="_blank" rel="noopener">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
       <rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/>
     </svg>
-    PAGAR $900 MXN CON STRIPE
+    APARTAR · $500 MXN CON STRIPE
   </a>
-  <p style="font-size:12px;color:#aaa;">Folio de registro guardado. Guárdalo para el día del evento.</p>
+  <a class="btn-wa" href="https://wa.me/525521341369?text=Hola%2C%20quiero%20apartar%20mi%20lugar%20en%20el%20Botox%20Party%20del%209%20de%20mayo%20en%20Cuernavaca."
+     target="_blank" rel="noopener">
+    💬 Preguntar por WhatsApp
+  </a>
+  <p style="font-size:12px;color:#aaa;">Guarda tu folio para el día del evento.</p>
   <button class="btn-nuevo" onclick="nuevoRegistro()">Registrar otra participante</button>
 </div>
 
@@ -337,10 +365,17 @@
 const CONFIG = {
   cloudinaryCloud:  'dxohyqmji',
   cloudinaryPreset: 'cass_beauty_consent',
-  precioMXN: 900,
-  // Crea tu Payment Link en dashboard.stripe.com → Products → Payment Links
-  // y pon la URL aquí:
-  stripePagoUrl: 'https://buy.stripe.com/REEMPLAZA_CON_TU_PAYMENT_LINK'
+  precioApartado:   500,
+  precioTotal:      5900,
+  precioRestante:   5400,
+  precioAnchor:     8500,
+  fechaEvento:      '9 de mayo 2026',
+  fechaEventoISO:   '2026-05-09',
+  lugarEvento:      'Casa privada, Cuernavaca, Morelos',
+  whatsapp:         '525521341369',
+  // Crea Payment Link de $500 MXN en dashboard.stripe.com → Products → Payment Links
+  // Activa client_reference_id como requerido. Pega la URL aquí:
+  stripePagoUrl:    'https://buy.stripe.com/PENDIENTE_PAYMENT_LINK_500MXN'
 };
 
 /* ─── PÍLDORAS ───────────────────────────────────────────────────── */
@@ -380,7 +415,8 @@ function iniciarRegistro() {
     <div class="mrow">Teléfono    <strong>${document.getElementById('telefono').value}</strong></div>
     <div class="mrow">Email       <strong>${document.getElementById('email').value}</strong></div>
     <div class="mrow">Áreas       <strong>${areas.length ? areas.join(', ') : 'Sin especificar'}</strong></div>
-    <div class="mrow" style="border:none;font-weight:700;color:var(--verde);">Total <strong>$${CONFIG.precioMXN} MXN</strong></div>
+    <div class="mrow" style="font-weight:700;color:var(--verde);">Apartado hoy <strong>$${CONFIG.precioApartado} MXN</strong></div>
+    <div class="mrow" style="border:none;">Restante el 9 mayo <strong>$${CONFIG.precioRestante} MXN</strong></div>
   `;
   document.getElementById('modalOverlay').classList.add('show');
 }
@@ -424,7 +460,7 @@ async function generarPDF(folio) {
   doc.setFontSize(22); doc.setFont('helvetica','bold'); doc.setTextColor(255,255,255);
   doc.text('CASS BEAUTY', ancho/2, 18, { align:'center' });
   doc.setFontSize(13); doc.setFont('helvetica','normal');
-  doc.text('BOTOX PARTY · Registro Anticipado', ancho/2, 27, { align:'center' });
+  doc.text('BOTOX PARTY · 9 de mayo 2026 · Cuernavaca', ancho/2, 27, { align:'center' });
   doc.setFontSize(10);
   doc.text(`Folio: ${folio}`, ancho/2, 37, { align:'center' });
 
@@ -476,11 +512,14 @@ async function generarPDF(folio) {
 
   // Pago
   doc.setFillColor(237,247,242);
-  doc.roundedRect(col, y, ancho-margen*2, 28, 4, 4, 'F');
+  doc.roundedRect(col, y, ancho-margen*2, 38, 4, 4, 'F');
   doc.setFontSize(12); doc.setFont('helvetica','bold'); doc.setTextColor(58,140,92);
-  doc.text('Monto a pagar: $900 MXN', col+8, y+10);
-  doc.setFontSize(10); doc.setFont('helvetica','normal'); doc.setTextColor(90,90,90);
-  doc.text('Depósito de reserva · Cancelaciones con 24 hrs → reembolso 100%', col+8, y+20);
+  doc.text('Apartado pagado: $500 MXN', col+8, y+10);
+  doc.setFontSize(10); doc.setFont('helvetica','bold'); doc.setTextColor(28,28,30);
+  doc.text('Restante a liquidar el 9 de mayo: $5,400 MXN', col+8, y+19);
+  doc.setFont('helvetica','normal'); doc.setTextColor(90,90,90);
+  doc.text('Paquete completo: $5,900 (valor real $8,500) · Cancelaciones 48 hrs → reembolso 100%', col+8, y+28);
+  doc.text(`Evento: ${CONFIG.lugarEvento}`, col+8, y+35);
 
   // Footer
   doc.setFontSize(9); doc.setTextColor(180,180,180);
@@ -528,6 +567,29 @@ function nuevoRegistro() {
   document.querySelectorAll('.pill.on').forEach(p => p.classList.remove('on'));
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
+/* ─── COUNTDOWN HERO ─────────────────────────────────────────────── */
+(function countdownInit() {
+  const target = new Date(CONFIG.fechaEventoISO + 'T10:00:00-06:00');
+  function update() {
+    const el = document.getElementById('heroCountdown');
+    if (!el) return;
+    const now = new Date();
+    const dias = Math.ceil((target - now) / 86400000);
+    if (dias > 1)        el.textContent = `⏳ Faltan ${dias} días`;
+    else if (dias === 1) el.textContent = '⏳ ¡Mañana es el día!';
+    else if (dias === 0) el.textContent = '✨ ¡Hoy es el día!';
+    else                 el.textContent = '✨ Cass Beauty te esperaba';
+  }
+  update();
+  setInterval(update, 60000);
+})();
+
+/* ─── PRELLENAR FECHA EVENTO ─────────────────────────────────────── */
+(function prefillFecha() {
+  const el = document.getElementById('fechaEvento');
+  if (el && !el.value) el.value = CONFIG.fechaEventoISO;
+})();
 </script>
 
 </body>
